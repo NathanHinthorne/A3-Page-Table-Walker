@@ -1,7 +1,19 @@
 #include<linux/module.h>
+#include<linux/sched/signal.h>
 
-int proc_init (void) {
+int proc_init(void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
+
+  int proc_count(void) {
+    int i = 0;
+    struct task_struct* thechild;
+    for_each_process(thechild)
+      i++;
+    return i;
+  }
+
+  printk(KERN_INFO “There are % d running processes.\n”, proc_count());
+
   return 0;
 }
 
